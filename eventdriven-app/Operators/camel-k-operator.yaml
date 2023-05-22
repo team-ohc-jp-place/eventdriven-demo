@@ -2,13 +2,13 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   labels:
-    operators.coreos.com/camel-k.openshift-operators: ''
+    operators.coreos.com/red-hat-camel-k.openshift-operators: ''
   name: camel-k
   namespace: openshift-operators
 spec:
-  channel: stable-1.7
+  channel: stable
   installPlanApproval: Automatic
-  name: camel-k
-  source: community-operators
+  name: red-hat-camel-k
+  source: redhat-operators
   sourceNamespace: openshift-marketplace
   #startingCSV: camel-k-operator.v1.7.0
