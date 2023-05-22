@@ -4,24 +4,10 @@ metadata:
   name: incoming-topic
   labels:
     strimzi.io/cluster: earth-cluster
-    namespace: eventdriven-demo
+  namespace: eventdriven-demo
 spec:
+  partitions: 10
+  replicas: 3
   config:
     retention.ms: 604800000
     segment.bytes: 1073741824
-  partitions: 1
-  replicas: 3
----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaTopic
-metadata:
-  name: outcoming-topic
-  labels:
-    strimzi.io/cluster: earth-cluster
-    namespace: eventdriven-demo
-spec:
-  config:
-    retention.ms: 604800000
-    segment.bytes: 1073741824
-  partitions: 1
-  replicas: 3
