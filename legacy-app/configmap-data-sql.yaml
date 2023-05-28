@@ -2,6 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: data-sql
+  namespace: legacy-app
 data:
   data.sql: |-
     -- Create a new database called 'InternationalDB'

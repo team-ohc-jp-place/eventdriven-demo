@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/instance: mssql-server-linux
     app.kubernetes.io/part-of: enterprise-app
     app.openshift.io/runtime: mssql
+  namespace: legacy-app
 spec:
   replicas: 1
   selector:

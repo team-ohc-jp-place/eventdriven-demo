@@ -11,6 +11,7 @@ items:
       app.kubernetes.io/component: my-apache-php-app
       app.kubernetes.io/instance: my-apache-php-app
     name: my-apache-php-app
+    namespace: legacy-app
   spec:
     lookupPolicy:
       local: false
