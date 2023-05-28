@@ -1,13 +1,14 @@
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
+---
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
 metadata:
-  labels:
-    operators.coreos.com/serverless-operator.openshift-operators: ''
-  name: serverless-operator
-  namespace: openshift-serverless
-spec:
-  channel: stable
-  installPlanApproval: Automatic
-  name: serverless-operator
-  source: redhat-operators
-  sourceNamespace: openshift-marketplace
+  name: knative-serving
+  namespace: knative-serving
+spec: {}
+---
+kind: KnativeEventing
+apiVersion: operator.knative.dev/v1beta1
+metadata:
+  name: knative-eventing
+  namespace: knative-eventing
+spec: {}

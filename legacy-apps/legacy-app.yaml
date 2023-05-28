@@ -1,0 +1,89 @@
+apiVersion: v1
+items:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-apache-php-app
+      app.kubernetes.io/component: my-apache-php-app
+      app.kubernetes.io/instance: my-apache-php-app
+    name: my-apache-php-app
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: quay.io/hguerreroo/my-apache-php-app:latest
+      from:
+        kind: DockerImage
+        name: quay.io/hguerreroo/my-apache-php-app:latest
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"my-apache-php-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"my-apache-php-app\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-apache-php-app
+      app.kubernetes.io/component: my-apache-php-app
+      app.kubernetes.io/instance: my-apache-php-app
+    name: my-apache-php-app
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: my-apache-php-app
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: my-apache-php-app
+      spec:
+        containers:
+        - env:
+          - name: SERVER_NAME
+            value: mssql-server-linux.svc
+          image: ' '
+          name: my-apache-php-app
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-apache-php-app
+      app.kubernetes.io/component: my-apache-php-app
+      app.kubernetes.io/instance: my-apache-php-app
+    name: my-apache-php-app
+  spec:
+    ports:
+    - name: 80-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      deployment: my-apache-php-app
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
