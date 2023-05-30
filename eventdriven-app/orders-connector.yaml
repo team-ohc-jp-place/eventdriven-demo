@@ -4,6 +4,8 @@ metadata:
   name: orders-connector
   labels:
     strimzi.io/cluster: debezium
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   class: io.debezium.connector.sqlserver.SqlServerConnector
   tasksMax: 1

@@ -4,6 +4,7 @@ metadata:
   name: debezium
   annotations:
     strimzi.io/use-connector-resources: "true"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   bootstrapServers: 'earth-cluster-kafka-bootstrap.svc:9092'
   image: 'quay.io/hguerreroo/rhi-cdc-connect:2020-Q2'

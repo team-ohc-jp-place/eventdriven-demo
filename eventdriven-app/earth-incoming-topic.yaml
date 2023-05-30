@@ -4,6 +4,8 @@ metadata:
   name: incoming-topic
   labels:
     strimzi.io/cluster: earth-cluster
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   partitions: 10
   replicas: 3
