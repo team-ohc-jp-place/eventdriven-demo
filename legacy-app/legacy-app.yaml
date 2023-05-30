@@ -10,6 +10,8 @@ items:
       app: my-apache-php-app
       app.kubernetes.io/component: my-apache-php-app
       app.kubernetes.io/instance: my-apache-php-app
+      app.kubernetes.io/part-of: enterprise-app
+      app.openshift.io/runtime: php
     name: my-apache-php-app
   spec:
     lookupPolicy:
