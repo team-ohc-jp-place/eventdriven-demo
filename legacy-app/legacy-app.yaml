@@ -58,7 +58,7 @@ items:
         containers:
         - env:
           - name: SERVER_NAME
-            value: mssql-server-linux.svc
+            value: mssql-server-linux
           image: ' '
           name: my-apache-php-app
           ports:
