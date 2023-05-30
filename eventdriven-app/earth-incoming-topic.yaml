@@ -4,7 +4,6 @@ metadata:
   name: incoming-topic
   labels:
     strimzi.io/cluster: earth-cluster
-  namespace: eventdriven-demo
 spec:
   partitions: 10
   replicas: 3

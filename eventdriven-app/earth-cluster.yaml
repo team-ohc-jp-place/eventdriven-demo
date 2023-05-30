@@ -2,7 +2,6 @@ kind: Kafka
 apiVersion: kafka.strimzi.io/v1beta2
 metadata:
   name: earth-cluster
-  namespace: eventdriven-demo
 spec:
   kafka:
     version: 3.4.0
