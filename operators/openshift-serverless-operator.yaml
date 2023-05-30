@@ -3,12 +3,16 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: openshift-serverless
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
   name: serverless-operators
   namespace: openshift-serverless
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec: {}
 ---
 apiVersion: operators.coreos.com/v1alpha1
@@ -16,8 +20,28 @@ kind: Subscription
 metadata:
   name: serverless-operator
   namespace: openshift-serverless
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: stable
   name: serverless-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+---
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"  
+spec: {}
+---
+kind: KnativeEventing
+apiVersion: operator.knative.dev/v1beta1
+metadata:
+  name: knative-eventing
+  namespace: knative-eventing
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec: {}

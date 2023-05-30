@@ -5,6 +5,8 @@ metadata:
   namespace: openshift-operators
   labels:
     operators.coreos.com/red-hat-camel-k.openshift-operators: ""
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   channel: latest
   installPlanApproval: Automatic
