@@ -1,0 +1,20 @@
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: order
+  namespace: eventdriven-app
+spec:
+  flows:
+    - from:
+        parameters:
+          bootstrapServers: 'earth-cluster-kafka-bootstrap:9092'
+          password: dummy
+          securityProtocol: PLAINTEXT
+          topic: user1.earth.dbo.Orders
+          user: dummy
+        steps:
+          - log:
+              message: '${body}'
+          - to:
+              uri: 'knative:event/orders'
+        uri: 'kamelet:kafka-source'
