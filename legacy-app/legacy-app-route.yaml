@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: legacy-app
+  namespace: legacy-app
+  labels:
+    app: my-apache-php-app
+    app.kubernetes.io/component: my-apache-php-app
+    app.kubernetes.io/instance: eventdriven-demo-legacy-app
+spec:
+  to:
+    kind: Service
+    name: my-apache-php-app
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: 80-tcp
