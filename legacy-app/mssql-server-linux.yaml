@@ -23,6 +23,9 @@ spec:
         deploymentconfig: mssql-server-linux
     spec:
       volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: mssql-server-volume
         - name: data-sql
           configMap:
             name: data-sql
@@ -51,6 +54,8 @@ spec:
             - name: data-sql
               mountPath: /usr/config/configure-db.sh
               subPath: data.sql
+            - name: db-data
+              mountPath: /var/opt/mssql
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -63,6 +68,21 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mssql-server-volume
+  labels:
+    app: mssql-server-linux
+    deploymentconfig: mssql-server-linux
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1G
+  volumeMode: Filesystem
 ---
 kind: Service
 apiVersion: v1
