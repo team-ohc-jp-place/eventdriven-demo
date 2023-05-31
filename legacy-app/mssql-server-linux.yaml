@@ -50,7 +50,7 @@ spec:
           volumeMounts:
             - name: data-sql
               mountPath: /usr/config/configure-db.sh
-              sub-path: data.sql
+              subPath: data.sql
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
