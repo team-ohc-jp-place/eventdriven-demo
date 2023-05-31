@@ -23,9 +23,6 @@ spec:
         deploymentconfig: mssql-server-linux
     spec:
       volumes:
-        - name: db-data
-          persistentVolumeClaim:
-            claimName: mssql-server-volume
         - name: data-sql
           configMap:
             name: data-sql
@@ -42,7 +39,7 @@ spec:
             - name: MSSQL_AGENT_ENABLED
               value: 'true'
           image: >-
-            mcr.microsoft.com/mssql/server@sha256:6ad336d284ec3b20d5ee89d68be03bce7b8018904e798a5d4bddcadc298dbd54
+            image-registry.openshift-image-registry.svc:5000/legacy-app/mssql-docker:latest
           ports:
             - containerPort: 1433
               protocol: TCP
@@ -51,10 +48,9 @@ spec:
           terminationMessagePolicy: File
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: db-data
-              mountPath: /var/opt/mssql
             - name: data-sql
-              mountPath: /opt/workshop
+              mountPath: /usr/config/configure-db.sh
+              sub-path: data.sql
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
@@ -67,21 +63,6 @@ spec:
       maxSurge: 25%
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mssql-server-volume
-  labels:
-    app: mssql-server-linux
-    deploymentconfig: mssql-server-linux
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1G
-  volumeMode: Filesystem
 ---
 kind: Service
 apiVersion: v1
