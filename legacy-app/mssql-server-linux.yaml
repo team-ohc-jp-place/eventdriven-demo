@@ -52,7 +52,7 @@ spec:
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: data-sql
-              mountPath: /usr/config/configure-db.sh
+              mountPath: /usr/config/setup.sql
               subPath: data.sql
             - name: db-data
               mountPath: /var/opt/mssql
@@ -62,10 +62,7 @@ spec:
       securityContext: {}
       schedulerName: default-scheduler
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
+    type: ReCreate
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 ---
