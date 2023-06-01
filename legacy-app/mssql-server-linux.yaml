@@ -47,6 +47,13 @@ spec:
       kind: ImageStreamTag
       name: 'mssql-docker:latest'
   resources: {}
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: >-
+          mcr.microsoft.com/mssql/server:latest
 ---
 kind: Deployment
 apiVersion: apps/v1
