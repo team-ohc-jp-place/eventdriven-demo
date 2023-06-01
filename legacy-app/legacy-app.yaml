@@ -49,7 +49,7 @@ items:
         - env:
           - name: SERVER_NAME
             value: mssql-server-linux
-          image: ' '
+          image: image-registry.openshift-image-registry.svc:5000/legacy-app/legacy-app:latest
           name: legacy-app
           ports:
           - containerPort: 80
