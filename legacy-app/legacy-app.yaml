@@ -13,10 +13,10 @@ items:
       local: false
     tags:
     - annotations:
-        openshift.io/imported-from: quay.io/hguerreroo/legacy-app:latest
+        openshift.io/imported-from: quay.io/hguerreroo/my-apache-php-app:latest:latest
       from:
         kind: DockerImage
-        name: quay.io/hguerreroo/legacy-app:latest
+        name: quay.io/hguerreroo/my-apache-php-app:latest
       name: latest
       referencePolicy:
         type: Local
