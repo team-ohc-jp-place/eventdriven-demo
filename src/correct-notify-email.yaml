@@ -1,0 +1,6 @@
+# camel-k: language=yaml
+- from:
+    uri: knative:event/order.correct
+    steps:
+      - log:
+          message: ${body}

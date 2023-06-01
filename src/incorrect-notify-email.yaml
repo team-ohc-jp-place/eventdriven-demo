@@ -1,0 +1,5 @@
+- from:
+    uri: knative:event/order.incorrect
+    steps:
+      - log:
+          message: ${body}

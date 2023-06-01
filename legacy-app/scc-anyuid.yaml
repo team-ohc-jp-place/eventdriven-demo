@@ -4,6 +4,7 @@ metadata:
   annotations:
     kubernetes.io/description: anyuid provides all features of the restricted SCC
       but allows users to run with any UID and any GID.
+    argocd.argoproj.io/sync-wave: "0"
   name: scc-anyuid
 allowHostDirVolumePlugin: false
 allowHostIPC: false

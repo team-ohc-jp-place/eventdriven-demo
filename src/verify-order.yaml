@@ -1,0 +1,31 @@
+- from:
+      uri: knative:event/orders
+      steps:
+        - delay:
+            expression:
+              constant:
+                expression: '500'
+        - unmarshal:
+            json: {}
+        - log:
+            message: Price of this order is ${in.body[payload][after][Price]}
+        - choice:
+            when:
+              - expression:
+                  simple:
+                    expression: ${in.body[payload][after][Price]} < 10
+                steps:
+                  - log:
+                      message: 'This order is correct. : ${body}'
+                  - marshal:
+                      json: {}
+                  - to:
+                      uri: knative:event/order.correct
+            otherwise:
+              steps:
+                - log:
+                    message: 'This order is incorrect. : ${body}'
+                - marshal:
+                    json: {}
+                - to:
+                    uri: knative:event/order.incorrect

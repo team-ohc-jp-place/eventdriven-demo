@@ -5,6 +5,7 @@ metadata:
   name: mssql-server-linux
   annotations:
     app.openshift.io/connects-to: debezium
+    argocd.argoproj.io/sync-wave: "1"    
   labels:
     app: mssql-server-linux
     app.kubernetes.io/component: mssql-server-linux
@@ -73,6 +74,8 @@ metadata:
   labels:
     app: mssql-server-linux
     deploymentconfig: mssql-server-linux
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"  
 spec:
   accessModes:
     - ReadWriteOnce
@@ -90,6 +93,8 @@ metadata:
     app.kubernetes.io/component: mssql-server-linux
     app.kubernetes.io/instance: mssql-server-linux
     app.kubernetes.io/part-of: enterprise-app
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"  
 spec:
   ports:
     - protocol: TCP

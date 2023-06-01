@@ -1,0 +1,13 @@
+- from:
+    uri: kamelet:kafka-source
+    steps:
+      - log:
+          message: ${body}
+      - to:
+          uri: knative:event/orders
+    parameters:
+      topic: user1.earth.dbo.Orders
+      bootstrapServers: earth-cluster-kafka-bootstrap:9092
+      securityProtocol: PLAINTEXT
+      user: dummy
+      password: dummy

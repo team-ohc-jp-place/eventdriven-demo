@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: eventdriven-demo-legacy-app
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/team-ohc-jp-place/eventdriven-demo.git'
+    path: legacy-app
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: legacy-app
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
