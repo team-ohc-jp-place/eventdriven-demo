@@ -1,0 +1,35 @@
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: total-time
+spec:
+  sources:
+    - content: |
+        // camel-k: language=java
+
+        import org.apache.camel.Exchange;
+        import org.apache.camel.builder.RouteBuilder;
+        import org.apache.camel.Processor;
+
+        public class TotalTime extends RouteBuilder{
+            @Override
+            public void configure() throws Exception {
+                org.apache.camel.Processor timeProc = new TimeProcessor();
+                from("knative:event/order.correct")
+                    .unmarshal().json()
+                    .setHeader("ts_ms",simple("${body[payload].[ts_ms]}"))
+                    .process(timeProc)
+                    .log("Total time is ${body} ms.")
+                    ;
+            }
+            public class TimeProcessor implements Processor {
+                public TimeProcessor() { }
+                   
+                public void process(Exchange exchange) throws Exception
+                {
+                    long ts_ms = exchange.getIn().getHeader("ts_ms", Long.class);
+                    exchange.getIn().setBody(System.currentTimeMillis() - ts_ms);
+                }
+            }    
+        }
+      name: TotalTime.java

@@ -1,0 +1,11 @@
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: correct-notify-email
+spec:
+  flows:
+    - from:
+        steps:
+          - log:
+              message: '${body}'
+        uri: 'knative:event/order.correct'

@@ -1,0 +1,37 @@
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: verify-order
+spec:
+  flows:
+    - from:
+        steps:
+          - delay:
+              expression:
+                constant:
+                  expression: '500'
+          - unmarshal:
+              json: {}
+          - log:
+              message: 'Price of this order is ${in.body[payload][after][Price]}'
+          - choice:
+              otherwise:
+                steps:
+                  - log:
+                      message: 'This order is incorrect. : ${body}'
+                  - marshal:
+                      json: {}
+                  - to:
+                      uri: 'knative:event/order.incorrect'
+              when:
+                - expression:
+                    simple:
+                      expression: '${in.body[payload][after][Price]} < 10'
+                  steps:
+                    - log:
+                        message: 'This order is correct. : ${body}'
+                    - marshal:
+                        json: {}
+                    - to:
+                        uri: 'knative:event/order.correct'
+        uri: 'knative:event/orders'
