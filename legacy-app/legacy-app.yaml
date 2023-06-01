@@ -17,7 +17,6 @@ items:
       from:
         kind: DockerImage
         name: quay.io/hguerreroo/legacy-app:latest
-      importPolicy: Legacy
       name: latest
       referencePolicy:
         type: Local
