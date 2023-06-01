@@ -3,80 +3,66 @@ items:
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: null
     labels:
-      app: my-apache-php-app
-      app.kubernetes.io/component: my-apache-php-app
-      app.kubernetes.io/instance: my-apache-php-app
-    name: my-apache-php-app
+      app: legacy-app
+      app.kubernetes.io/component: legacy-app
+      app.kubernetes.io/instance: legacy-app
+    name: legacy-app
   spec:
     lookupPolicy:
       local: false
     tags:
     - annotations:
-        openshift.io/imported-from: quay.io/hguerreroo/my-apache-php-app:latest
+        openshift.io/imported-from: quay.io/hguerreroo/legacy-app:latest
       from:
         kind: DockerImage
-        name: quay.io/hguerreroo/my-apache-php-app:latest
-      generation: null
-      importPolicy: {}
+        name: quay.io/hguerreroo/legacy-app:latest
+      importPolicy: Legacy
       name: latest
       referencePolicy:
-        type: ""
-  status:
-    dockerImageRepository: ""
+        type: Local
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    annotations:
-      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"my-apache-php-app:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"my-apache-php-app\")].image"}]'
-      openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: null
     labels:
-      app: my-apache-php-app
-      app.kubernetes.io/component: my-apache-php-app
-      app.kubernetes.io/instance: my-apache-php-app
+      app: legacy-app
+      app.kubernetes.io/component: legacy-app
+      app.kubernetes.io/instance: legacy-app
       app.kubernetes.io/part-of: enterprise-app
       app.openshift.io/runtime: php
-    name: my-apache-php-app
+    name: legacy-app
   spec:
     replicas: 1
     selector:
       matchLabels:
-        deployment: my-apache-php-app
-    strategy: {}
+        deployment: legacy-app
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 25%
+        maxSurge: 25%
     template:
       metadata:
-        annotations:
-          openshift.io/generated-by: OpenShiftNewApp
-        creationTimestamp: null
         labels:
-          deployment: my-apache-php-app
+          deployment: legacy-app
       spec:
         containers:
         - env:
           - name: SERVER_NAME
             value: mssql-server-linux
           image: ' '
-          name: my-apache-php-app
+          name: legacy-app
           ports:
           - containerPort: 80
             protocol: TCP
-          resources: {}
-  status: {}
 - apiVersion: v1
   kind: Service
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: null
     labels:
-      app: my-apache-php-app
-      app.kubernetes.io/component: my-apache-php-app
-      app.kubernetes.io/instance: my-apache-php-app
-    name: my-apache-php-app
+      app: legacy-app
+      app.kubernetes.io/component: legacy-app
+      app.kubernetes.io/instance: legacy-app
+    name: legacy-app
   spec:
     ports:
     - name: 80-tcp
@@ -84,8 +70,6 @@ items:
       protocol: TCP
       targetPort: 80
     selector:
-      deployment: my-apache-php-app
-  status:
-    loadBalancer: {}
+      deployment: legacy-app
 kind: List
 metadata: {}
