@@ -5,6 +5,7 @@ metadata:
   name: mssql-server-linux
   annotations:
     app.openshift.io/connects-to: debezium
+    argocd.argoproj.io/sync-wave: "1" 
   labels:
     app: mssql-server-linux
     app.kubernetes.io/component: mssql-server-linux
