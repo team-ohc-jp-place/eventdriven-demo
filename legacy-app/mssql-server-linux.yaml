@@ -1,60 +1,4 @@
 ---
-kind: BuildConfig
-apiVersion: build.openshift.io/v1
-metadata:
-  name: mssql-docker
-  labels:
-    build: mssql-docker
-spec:
-  output:
-    to:
-      kind: ImageStreamTag
-      name: 'mssql-docker:latest'
-  strategy:
-    type: Docker
-    dockerStrategy:
-      from:
-        kind: ImageStreamTag
-        name: 'server:2017-latest'
-  source:
-    type: Git
-    git:
-      uri: 'https://github.com/microsoft/mssql-docker.git'
-    contextDir: 'linux/preview/examples/mssql-customize'
----
-kind: ImageStream
-apiVersion: image.openshift.io/v1
-metadata:
-  name: mssql-docker
-  namespace: legacy-app
-  labels:
-    build: mssql-docker
-spec:
-  lookupPolicy:
-    local: false
----
-kind: Build
-apiVersion: build.openshift.io/v1
-metadata:
-  annotations:
-    openshift.io/build-config.name: mssql-docker
-    openshift.io/build.number: '1'
-    openshift.io/build.pod-name: mssql-docker-1-build
-  name: mssql-docker-1
-spec:
-  output:
-    to:
-      kind: ImageStreamTag
-      name: 'mssql-docker:latest'
-  resources: {}
-  strategy:
-    type: Docker
-    dockerStrategy:
-      from:
-        kind: DockerImage
-        name: >-
-          mcr.microsoft.com/mssql/server:latest
----
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -97,8 +41,7 @@ spec:
               value: Standard
             - name: MSSQL_AGENT_ENABLED
               value: 'true'
-          image: >-
-            image-registry.openshift-image-registry.svc:5000/legacy-app/mssql-docker:latest
+          image: quay.io/tatsuyak8i/mssql-docker:latest
           ports:
             - containerPort: 1433
               protocol: TCP
