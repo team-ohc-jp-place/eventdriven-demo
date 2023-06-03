@@ -42,7 +42,7 @@ spec:
               value: Standard
             - name: MSSQL_AGENT_ENABLED
               value: 'true'
-          image: quay.io/tatsuyak8i/mssql-docker:latest
+          image: quay.io/tatsuyak8i/mssql-docker:1.0
           ports:
             - containerPort: 1433
               protocol: TCP
